@@ -35,6 +35,15 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            // Obtener la lista de issues abiertas con la etiqueta "release-failed"
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: "open",
+              labels: "release-failed"
+            });
+        
+            // Verificar si ya existe una issue abierta con el mismo título
             const version = process.env.version || 'versión desconocida';
             const issueTitle = `Error en el release de la versión ${version}`;
             const issueExists = issues.some(issue => issue.title === issueTitle);
