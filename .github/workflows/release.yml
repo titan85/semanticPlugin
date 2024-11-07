@@ -24,10 +24,15 @@ jobs:
       - name: Run Semantic Release
         id: semantic_release
         run: |
-          version=$(npx semantic-release --dry-run | grep -oP '(?<=The next release version is )\d+\.\d+\.\d+')
-          echo "RELEASE_VERSION=$version" >> $GITHUB_ENV
+          npx semantic-release || exit 1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Capture Version for Failure Step
+        if: failure()
+        run: |
+          version=$(npx semantic-release --dry-run | grep -oP '(?<=The next release version is )\d+\.\d+\.\d+')
+          echo "VERSION=$version" >> $GITHUB_ENV
 
       - name: Create Issue on Failure
         if: failure()
@@ -42,8 +47,7 @@ jobs:
               labels: "release-failed"
             });
 
-            // Accede a la versión desde el entorno
-            const version = process.env.RELEASE_VERSION;
+            const version = process.env.VERSION || 'versión desconocida';
             const issueTitle = `Error en el release de la versión ${version}`;
             const issueExists = issues.some(issue => issue.title === issueTitle);
 
