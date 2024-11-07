@@ -33,6 +33,12 @@ runs:
         echo "VERSION=$version" >> $GITHUB_ENV
       shell: bash
 
+    - name: Obtener el hash del commit utilizado
+      id: get_commit
+      run: echo "COMMIT_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
+      env: 
+        COMMIT_SHA: ${{ env.COMMIT_SHA }}
+
     - name: Run Semantic Release
       if: env.VERSION != 'versión desconocida'
       run: npx semantic-release
@@ -48,6 +54,7 @@ runs:
         github-token: ${{ inputs.GITHUB_TOKEN }}
         script: |
           const version = process.env.VERSION || 'versión desconocida';
+          const commitSHA = process.env.COMMIT_SHA || 'commit desconocido';
           const { data: issues } = await github.rest.issues.listForRepo({
             owner: context.repo.owner,
             repo: context.repo.repo,
@@ -66,6 +73,7 @@ runs:
               body: `⚠️ **Se produjo un error durante el proceso de release**.\n\n` +
                     `Detalles del error:\n\n` +
                     `- Versión: ${version}\n` +
+                    `- Commit: ${commitSHA}\n` +
                     `- Usuario que ejecutó: ${{ github.actor }}\n\n` +
                     `Por favor, revisa los logs para más detalles.`,
               labels: ["release-failed", "bug"]
