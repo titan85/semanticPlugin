@@ -22,6 +22,7 @@ runs:
 
     - name: Install dependencies
       run: npm install
+      shell: bash
 
     - name: Capture Version with Dry Run
       id: capture_version
@@ -30,12 +31,14 @@ runs:
       run: |
         version=$(npx semantic-release --dry-run | grep -oP '(?<=The next release version is )\d+\.\d+\.\d+' || echo "versión desconocida")
         echo "VERSION=$version" >> $GITHUB_ENV
+      shell: bash
 
     - name: Run Semantic Release
       if: env.VERSION != 'versión desconocida'
       run: npx semantic-release
       env:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+      shell: bash
 
     - name: Create Issue on Failure
       if: failure()
