@@ -10,14 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out repository
+      - name: Check out the repository
         uses: actions/checkout@v3
-
-      - name: Set up Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '11'  # Cambia a la versión de Java que necesites
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -28,6 +22,6 @@ jobs:
         run: npm install
 
       - name: Run Semantic Release
-        uses: cycjimmy/semantic-release-action@v2
+        uses: semantic-release/semantic-release@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
