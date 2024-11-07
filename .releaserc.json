@@ -25,7 +25,9 @@
           "assets": [
             {"path": "dist/*.zip", "label": "Distribution Files"},
             {"path": "docs/*.pdf", "label": "Documentation"}
-          ]
+          ],
+          "failComment": false,
+          "failTitle": false
         }
       ]
     ]
