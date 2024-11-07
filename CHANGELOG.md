@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/titan85/semanticPlugin/compare/v1.1.0...v1.2.0) (2024-11-07)
+
+
+### Features
+
+* nuevas funcionalidades de semantic ([6ebe901](https://github.com/titan85/semanticPlugin/commit/6ebe901f36b60c96427b22d8ae0aa430a87488b0))
+
 # [1.1.0](https://github.com/titan85/semanticPlugin/compare/v1.0.1...v1.1.0) (2024-11-07)
 
 
