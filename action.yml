@@ -15,13 +15,11 @@ runs:
     - name: Check out the repository
       uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16'
-
-    - name: Install dependencies
-      run: npm install
+    - name: Obtener el hash del commit utilizado
+      id: get_commit
+      run: echo "COMMIT_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
+      env: 
+        COMMIT_SHA: ${{ env.COMMIT_SHA }}
       shell: bash
 
     - name: Capture Version with Dry Run
@@ -33,11 +31,13 @@ runs:
         echo "VERSION=$version" >> $GITHUB_ENV
       shell: bash
 
-    - name: Obtener el hash del commit utilizado
-      id: get_commit
-      run: echo "COMMIT_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
-      env: 
-        COMMIT_SHA: ${{ env.COMMIT_SHA }}
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    - name: Install dependencies
+      run: npm install
       shell: bash
 
     - name: Run Semantic Release
