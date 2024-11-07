@@ -20,15 +20,7 @@ runs:
       run: echo "COMMIT_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
       env: 
         COMMIT_SHA: ${{ env.COMMIT_SHA }}
-      shell: bash
-
-    - name: Capture Version with Dry Run
-      id: capture_version
-      env:
-        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
-      run: |
-        version=$(npx semantic-release --dry-run | grep -oP '(?<=The next release version is )\d+\.\d+\.\d+' || echo "unknown version")
-        echo "VERSION=$version" >> $GITHUB_ENV
+        RUN_ID: ${{ github.run_id }}
       shell: bash
 
     - name: Set up Node.js
@@ -38,6 +30,15 @@ runs:
 
     - name: Install dependencies
       run: npm install
+      shell: bash
+
+    - name: Capture Version with Dry Run
+      id: capture_version
+      env:
+        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+      run: |
+        version=$(npx semantic-release --dry-run | grep -oP '(?<=The next release version is )\d+\.\d+\.\d+' || echo "unknown version")
+        echo "VERSION=$version" >> $GITHUB_ENV
       shell: bash
 
     - name: Run Semantic Release
@@ -67,6 +68,7 @@ runs:
           const issueExists = issues.some(issue => issue.title === issueTitle);
 
           if (!issueExists) {
+            const logsUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${process.env.RUN_ID}`;
             await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -76,7 +78,7 @@ runs:
                     `- Versión: ${version}\n` +
                     `- Commit: ${commitSHA}\n` +
                     `- Usuario que ejecutó: ${{ github.actor }}\n\n` +
-                    `Por favor, revisa los logs para más detalles.`,
+                    `Por favor, [revisa los logs para más detalles](${logsUrl}).`,
               labels: ["release-failed", "bug"]
             });
           }
