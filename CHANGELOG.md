@@ -1,3 +1,31 @@
+# [1.4.0](https://github.com/titan85/semanticPlugin/compare/v1.3.0...v1.4.0) (2024-11-07)
+
+
+### Bug Fixes
+
+* correccion para provocar error no debe aumentar version ([c9c84f7](https://github.com/titan85/semanticPlugin/commit/c9c84f7c57280d2116b60689618787e616440de7))
+
+
+### Features
+
+* creacion de Issue message cuando falla y la cierra en failed ([1b9ac8f](https://github.com/titan85/semanticPlugin/commit/1b9ac8f69c06610b3a24f5ee20fa7abe8e58083b))
+* creacion de Issue message cuando falla y la cierra en failed ([063e2dd](https://github.com/titan85/semanticPlugin/commit/063e2dd5ae8611a91f9f670d3b0adc7ae2786bc2))
+* creacion de Issue message cuando falla y la cierra en failed ([760a372](https://github.com/titan85/semanticPlugin/commit/760a372db2335f4eb0ba0903d7bc626f22acc0da))
+* creacion de Issue message cuando falla y la cierra en failed ([0b4f4a6](https://github.com/titan85/semanticPlugin/commit/0b4f4a6acf2dd086ee823c9d07a6ddb4261f4537))
+* creacion de Issue message cuando falla y la cierra en failed ([2b28790](https://github.com/titan85/semanticPlugin/commit/2b2879087e59b763b265ee368a66a84533638d28))
+* creacion de Issue message cuando falla y la cierra en failed ([f00e28b](https://github.com/titan85/semanticPlugin/commit/f00e28b318b98844f1fc4200e72f433fdcf42182))
+* creacion de Issue message cuando falla y la cierra en failed ([9795fb1](https://github.com/titan85/semanticPlugin/commit/9795fb1f7a17db1622f226132a7dd4c5635b07d7))
+* creacion de Issue message cuando falla y la cierra en failed ([c680116](https://github.com/titan85/semanticPlugin/commit/c6801160f7b6fb2f3ffa4445df4be6de1c426af8))
+* Customizacion de Issue message cuando falla ([3e9eb38](https://github.com/titan85/semanticPlugin/commit/3e9eb383894908c0ecb395c42b5bfee3f39f6ad2))
+* Customizacion de Issue message cuando falla ([d1b4e1b](https://github.com/titan85/semanticPlugin/commit/d1b4e1bb5460449eef6b775978cd588deae99c9e))
+* iisue ([555e858](https://github.com/titan85/semanticPlugin/commit/555e8588309fa3d4cd08885eec91f4c17ba6dcac))
+* provo fallo para ver Customizacion de Issue message cuando falla ([e941e16](https://github.com/titan85/semanticPlugin/commit/e941e1644f826eac26f137fb2012ccdf44a96271))
+* provoco fallo para ver Customizacion de Issue message cuando falla ([d3975e3](https://github.com/titan85/semanticPlugin/commit/d3975e39ad13921a9f4efb1f000073b22921d1ea))
+* provoco fallo para ver Customizacion de Issue message cuando falla ([a499711](https://github.com/titan85/semanticPlugin/commit/a4997115c052a4d10707b8d95bdb6cf187a3cec7))
+* provoco fallo para ver Customizacion de Issue message cuando falla ([f4fa95c](https://github.com/titan85/semanticPlugin/commit/f4fa95c33775df957e8e2682933534dba9d9f9fa))
+* provoco fallo para ver Customizacion de Issue message cuando falla ([3e2df7a](https://github.com/titan85/semanticPlugin/commit/3e2df7a0d91a15ef057364c3fe6da0eaa0335636))
+* sin issue ([dcd246a](https://github.com/titan85/semanticPlugin/commit/dcd246a36c848be80bfe8673621a47c85c64fd76))
+
 # [1.3.0](https://github.com/titan85/semanticPlugin/compare/v1.2.2...v1.3.0) (2024-11-07)
 
 
