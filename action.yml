@@ -20,7 +20,6 @@ runs:
       run: echo "COMMIT_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
       env: 
         COMMIT_SHA: ${{ env.COMMIT_SHA }}
-        RUN_ID: ${{ github.run_id }}
       shell: bash
 
     - name: Set up Node.js
@@ -68,7 +67,7 @@ runs:
           const issueExists = issues.some(issue => issue.title === issueTitle);
 
           if (!issueExists) {
-            const logsUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${process.env.RUN_ID}`;
+            const logsUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
             await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
