@@ -16,12 +16,12 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '16'  # Asegúrate de que sea compatible con tu proyecto
 
       - name: Install dependencies
         run: npm install
 
       - name: Run Semantic Release
-        uses: semantic-release/semantic-release@v3
+        run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
