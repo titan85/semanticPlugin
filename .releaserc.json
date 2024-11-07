@@ -25,10 +25,7 @@
           "assets": [
             {"path": "dist/*.zip", "label": "Distribution Files"},
             {"path": "docs/*.pdf", "label": "Documentation"}
-          ],
-          "failComment": "⚠️ **Error en el proceso de release** para la versión `${nextRelease.version}`.\n\nDetalles del error:\n- Fecha: ${new Date().toISOString()}\n- Commit: ${lastRelease.gitTag}\n- Usuario que lo ejecutó: ${process.env.GITHUB_ACTOR}\n\nPor favor, revisa el pipeline para ver el error completo y tomar las acciones necesarias.",
-          "failTitle": "Error en el release ${nextRelease.version}",
-          "labels": ["release-failed", "bug"]
+          ]
         }
       ]
     ]

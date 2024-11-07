@@ -16,12 +16,28 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'  # Asegúrate de que sea compatible con tu proyecto
+          node-version: '16'
 
       - name: Install dependencies
         run: npm install
 
       - name: Run Semantic Release
+        id: semantic_release
         run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+
+      - name: Create Issue on Failure
+        if: failure() && steps.semantic_release.outcome != 'success'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: "Error en el release de la versión ${{ steps.semantic_release.outputs.version }}",
+              body: "⚠️ **Se produjo un error durante el proceso de release**.\n\nDetalles del error:\n- Versión: ${{ steps.semantic_release.outputs.version }}\n- Usuario que ejecutó: ${{ github.actor }}\n\nPor favor, revisa los logs para más detalles.",
+              labels: ["release-failed", "bug"]
+            })
