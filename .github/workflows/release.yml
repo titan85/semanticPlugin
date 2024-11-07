@@ -24,30 +24,28 @@ jobs:
       - name: Run Semantic Release
         id: semantic_release
         run: |
-          npx semantic-release
-          echo "version=${{ steps.semantic_release.outputs.version }}" >> $GITHUB_ENV
+          version=$(npx semantic-release | tee /dev/tty | grep -oP 'The next release version is \K([0-9]+\.[0-9]+\.[0-9]+)')
+          echo "version=$version" >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Issue on Failure
-        if: failure() && steps.semantic_release.outcome != 'success'
+        if: failure()
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            // Obtener la lista de issues abiertas con la etiqueta "release-failed"
             const { data: issues } = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
               state: "open",
               labels: "release-failed"
             });
-        
-            // Verificar si ya existe una issue abierta con el mismo título
+
             const version = process.env.version || 'versión desconocida';
             const issueTitle = `Error en el release de la versión ${version}`;
             const issueExists = issues.some(issue => issue.title === issueTitle);
-        
+
             if (!issueExists) {
               await github.rest.issues.create({
                 owner: context.repo.owner,
@@ -61,4 +59,3 @@ jobs:
                 labels: ["release-failed", "bug"]
               });
             }
-        
