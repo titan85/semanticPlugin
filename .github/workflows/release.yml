@@ -34,10 +34,18 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            const version = "${{ steps.semantic_release.outputs.version || 'versión desconocida' }}";
+            const user = "${{ github.actor }}";
+            const errorDetails = `⚠️ **Error en el proceso de release** para la versión ${version}.\n\n` +
+                                 `Detalles del error:\n\n` +
+                                 `- Fecha: ${new Date().toISOString()}\n` +
+                                 `- Usuario que ejecutó el release: ${user}\n\n` +
+                                 `Por favor, revisa el pipeline para ver el error completo y tomar las acciones necesarias.`;
             github.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: "Error en el release de la versión ${{ steps.semantic_release.outputs.version }}",
-              body: "⚠️ **Se produjo un error durante el proceso de release**.\n\nDetalles del error:\n- Versión: ${{ steps.semantic_release.outputs.version }}\n- Usuario que ejecutó: ${{ github.actor }}\n\nPor favor, revisa los logs para más detalles.",
+              title: `Error en el release de la versión ${version}`,
+              body: errorDetails,
               labels: ["release-failed", "bug"]
             })
+      
