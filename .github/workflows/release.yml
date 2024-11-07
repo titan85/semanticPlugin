@@ -35,27 +35,28 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const { data: issues } = await github.rest.issues.listForRepo({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              state: "open",
-              labels: "release-failed"
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            state: "open",
+            labels: "release-failed"
             });
-
+    
             // Verificar si ya existe una issue abierta con el mismo título
             const version = "${{ steps.semantic_release.outputs.version || 'versión desconocida' }}";
             const issueTitle = `Error en el release de la versión ${version}`;
             const issueExists = issues.some(issue => issue.title === issueTitle);
-
+    
             if (!issueExists) {
               await github.rest.issues.create({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 title: issueTitle,
                 body: `⚠️ **Se produjo un error durante el proceso de release**.\n\n` +
-                      `Detalles del error:\n\n` +
-                      `- Versión: ${version}\n` +
-                      `- Usuario que ejecutó: ${{ github.actor }}\n\n` +
-                      `Por favor, revisa los logs para más detalles.`,
+                    `Detalles del error:\n\n` +
+                    `- Versión: ${version}\n` +
+                    `- Usuario que ejecutó: ${{ github.actor }}\n\n` +
+                    `Por favor, revisa los logs para más detalles.`,
                 labels: ["release-failed", "bug"]
               });
             }
+    
