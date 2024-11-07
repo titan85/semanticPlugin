@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/titan85/semanticPlugin/compare/v1.2.2...v1.3.0) (2024-11-07)
+
+
+### Features
+
+* provoco error no debe aumentar version ([bac7e94](https://github.com/titan85/semanticPlugin/commit/bac7e94108c72fb4aecf57349a9a31a4839401b3))
+
 ## [1.2.2](https://github.com/titan85/semanticPlugin/compare/v1.2.1...v1.2.2) (2024-11-07)
 
 
