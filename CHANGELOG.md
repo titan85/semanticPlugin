@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/titan85/semanticPlugin/compare/v1.2.0...v1.2.1) (2024-11-07)
+
+
+### Bug Fixes
+
+* correccion error cuando fallaba algo incrementaba version ([c9e47c1](https://github.com/titan85/semanticPlugin/commit/c9e47c1c68e58006bec2e8f3c8c1e2513dfb29a8))
+
 # [1.2.0](https://github.com/titan85/semanticPlugin/compare/v1.1.0...v1.2.0) (2024-11-07)
 
 
