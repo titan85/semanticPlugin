@@ -26,7 +26,6 @@ jobs:
         run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        continue-on-error: true
 
       - name: Create Issue on Failure
         if: failure() && steps.semantic_release.outcome != 'success'
@@ -34,18 +33,27 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const version = "${{ steps.semantic_release.outputs.version || 'versión desconocida' }}";
-            const user = "${{ github.actor }}";
-            const errorDetails = `⚠️ **Error en el proceso de release** para la versión ${version}.\n\n` +
-                                 `Detalles del error:\n\n` +
-                                 `- Fecha: ${new Date().toISOString()}\n` +
-                                 `- Usuario que ejecutó el release: ${user}\n\n` +
-                                 `Por favor, revisa el pipeline para ver el error completo y tomar las acciones necesarias.`;
-            github.issues.create({
+            const { data: issues } = await github.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: `Error en el release de la versión ${version}`,
-              body: errorDetails,
-              labels: ["release-failed", "bug"]
-            })
-      
+              state: "open",
+              labels: "release-failed"
+            });
+
+            // Verificar si ya existe una issue abierta con el mismo título
+            const issueTitle = `Error en el release de la versión ${"${{ steps.semantic_release.outputs.version || 'versión desconocida' }}"}`;
+            const issueExists = issues.some(issue => issue.title === issueTitle);
+
+            if (!issueExists) {
+              await github.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: issueTitle,
+                body: `⚠️ **Se produjo un error durante el proceso de release**.\n\n` +
+                      `Detalles del error:\n\n` +
+                      `- Versión: ${{ steps.semantic_release.outputs.version || 'versión desconocida' }}\n` +
+                      `- Usuario que ejecutó: ${{ github.actor }}\n\n` +
+                      `Por favor, revisa los logs para más detalles.`,
+                labels: ["release-failed", "bug"]
+              });
+            }
