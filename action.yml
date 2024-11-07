@@ -38,6 +38,7 @@ runs:
       run: echo "COMMIT_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
       env: 
         COMMIT_SHA: ${{ env.COMMIT_SHA }}
+      shell: bash
 
     - name: Run Semantic Release
       if: env.VERSION != 'versión desconocida'
