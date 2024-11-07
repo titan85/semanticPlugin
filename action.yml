@@ -38,6 +38,7 @@ runs:
       run: npx semantic-release
       env:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+        DEBUG: semantic-release:*
       shell: bash
 
     - name: Create Issue on Failure
