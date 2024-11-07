@@ -1,2 +1,3 @@
 #!/bin/bash
-ech "Deploying version $1"
+echo "Deploying version $1"
+exit 1
