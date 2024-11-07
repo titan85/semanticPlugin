@@ -1,6 +1,6 @@
 {
   "branches": ["main"],
-  "repositoryUrl": "${{ secrets.REPOSITORY_URL }}",
+  "repositoryUrl": "https://github.com/titan85/helloWorld",
   "plugins": [
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
