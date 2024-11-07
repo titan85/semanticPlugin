@@ -30,7 +30,7 @@ runs:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
       run: |
         version=$(npx semantic-release --dry-run | grep -oP '(?<=The next release version is )\d+\.\d+\.\d+' || echo "versión desconocida")
-        echo "VERSION=$version" >> $GITHUB_ENV
+        echo "VERSION=$version"
       shell: bash
 
     - name: Run Semantic Release
