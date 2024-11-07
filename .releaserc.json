@@ -1,17 +1,35 @@
 {
-  "branches": ["main"],
-  "repositoryUrl": "https://github.com/titan85/helloWorld",
-  "plugins": [
-    "@semantic-release/commit-analyzer",
-    "@semantic-release/release-notes-generator",
-    "@semantic-release/changelog",
-    [
-      "@semantic-release/git",
-      {
-        "assets": ["CHANGELOG.md", "package.json"],
-        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
-      }
-    ],
-    "@semantic-release/github"
-  ]
-}
+    "branches": ["main", "develop", "release", "feature/*"],
+    "repositoryUrl": "${{ secrets.REPOSITORY_URL }}",
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      [
+        "@semantic-release/exec",
+        {
+          "verifyReleaseCmd": "./scripts/deploy.sh ${nextRelease.version}",
+          "prepareCmd": "mvn versions:set -DnewVersion=${nextRelease.version} && mvn versions:commit"
+        }
+      ],
+      [
+        "@semantic-release/git",
+        {
+          "assets": ["pom.xml", "CHANGELOG.md"],
+          "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }
+      ],
+      [
+        "@semantic-release/github",
+        {
+          "assets": [
+            {"path": "dist/*.zip", "label": "Distribution Files"},
+            {"path": "docs/*.pdf", "label": "Documentation"}
+          ],
+          "failComment": false,
+          "failTitle": false
+        }
+      ]
+    ]
+  }
+  
