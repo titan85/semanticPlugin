@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "Deploying version $1"
+ech "Deploying version $1"
