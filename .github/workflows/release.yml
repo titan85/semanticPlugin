@@ -24,9 +24,8 @@ jobs:
       - name: Run Semantic Release
         id: semantic_release
         run: |
-          npx semantic-release | tee semantic-release-output.txt
-          version=$(grep -oP 'The next release version is \K([0-9]+\.[0-9]+\.[0-9]+)' semantic-release-output.txt || echo "versión desconocida")
-          echo "version=$version" >> $GITHUB_ENV
+          npx semantic-release
+          echo "version=${{ steps.semantic_release.outputs.version }}" >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -44,7 +43,7 @@ jobs:
             });
     
             // Verificar si ya existe una issue abierta con el mismo título
-            const issueTitle = `Error en el release de la versión ${process.env.version}`;
+            const issueTitle = `Error en el release de la versión ${"${{ steps.semantic_release.outputs.version || 'versión desconocida' }}"}`;
             const issueExists = issues.some(issue => issue.title === issueTitle);
     
             if (!issueExists) {
@@ -54,7 +53,7 @@ jobs:
                 title: issueTitle,
                 body: `⚠️ **Se produjo un error durante el proceso de release**.\n\n` +
                     `Detalles del error:\n\n` +
-                    `- Versión: ${process.env.version}\n` +
+                    `- Versión: ${{ steps.semantic_release.outputs.version || 'versión desconocida' }}\n` +
                     `- Usuario que ejecutó: ${{ github.actor }}\n\n` +
                     `Por favor, revisa los logs para más detalles.`,
                 labels: ["release-failed", "bug"]
