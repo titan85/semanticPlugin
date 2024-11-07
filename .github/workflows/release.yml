@@ -23,13 +23,14 @@ jobs:
 
       - name: Capture Version with Dry Run
         id: capture_version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           version=$(npx semantic-release --dry-run | grep -oP '(?<=The next release version is )\d+\.\d+\.\d+' || echo "versión desconocida")
           echo "VERSION=$version" >> $GITHUB_ENV
-          echo "::set-output name=version::$version"
 
       - name: Run Semantic Release
-        if: steps.capture_version.outputs.version != 'versión desconocida'
+        if: env.VERSION != 'versión desconocida'
         id: semantic_release
         run: npx semantic-release
         env:
