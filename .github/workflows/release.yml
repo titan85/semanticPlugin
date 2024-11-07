@@ -30,11 +30,12 @@ jobs:
           echo "VERSION=$version" >> $GITHUB_ENV
 
       - name: Run Semantic Release
-        if: env.VERSION != 'versión desconocida'
         id: semantic_release
-        run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY_URL: ${{ github.repository }}
+        run: |
+          npx semantic-release
 
       - name: Create Issue on Failure
         if: failure()
