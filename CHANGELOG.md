@@ -1,3 +1,11 @@
+## [1.0.1](https://github.com/titan85/semanticPlugin/compare/v1.0.0...v1.0.1) (2024-11-07)
+
+
+### Bug Fixes
+
+* corregimos un error ([826cdb0](https://github.com/titan85/semanticPlugin/commit/826cdb0c1266adaeaea2c4259757e78e23d6a95c))
+* corregimos un error ([48792a2](https://github.com/titan85/semanticPlugin/commit/48792a2b3977faaa41559d28d1c5b0c5b33a80ec))
+
 # 1.0.0 (2024-11-07)
 
 
