@@ -1,5 +1,5 @@
 {
-    "branches": ["main", "develop", "release", "feature/*"],
+    "branches": ["main"],
     "repositoryUrl": "${{ secrets.REPOSITORY_URL }}",
     "plugins": [
       "@semantic-release/commit-analyzer",
