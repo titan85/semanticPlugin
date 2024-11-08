@@ -39,6 +39,13 @@ runs:
         version=$(npx semantic-release --dry-run | grep -oP '(?<=The next release version is )\d+\.\d+\.\d+' || echo "unknown version")
         echo "VERSION=$version" >> $GITHUB_ENV
       shell: bash
+    
+    - name: Mostrar contexto completo
+      uses: actions/github-script@v6
+      with:
+        github-token: ${{ inputs.GITHUB_TOKEN }}
+        script: |
+          console.log(JSON.stringify(context, null, 2));
 
     - name: Run Semantic Release
       if: env.VERSION != 'versión desconocida'
@@ -47,13 +54,6 @@ runs:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
         DEBUG: semantic-release:*
       shell: bash
-
-    - name: Mostrar contexto completo
-      uses: actions/github-script@v6
-      with:
-        github-token: ${{ inputs.GITHUB_TOKEN }}
-        script: |
-          console.log(JSON.stringify(context, null, 2));
 
     - name: Create Issue on Failure
       if: failure()
