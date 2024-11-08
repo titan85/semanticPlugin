@@ -48,6 +48,9 @@ runs:
         DEBUG: semantic-release:*
       shell: bash
 
+    - name: Reorder changelog
+      run: node scripts/reorder-changelog.js
+
     - name: Create Issue on Failure
       if: failure()
       uses: actions/github-script@v6
