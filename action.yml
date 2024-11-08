@@ -48,8 +48,13 @@ runs:
         DEBUG: semantic-release:*
       shell: bash
 
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.x'
+
     - name: Reorder changelog
-      run: node scripts/reorder-changelog.js
+      run: python3 scripts/reorder-changelog.py
       shell: bash
 
     - name: Create Issue on Failure
