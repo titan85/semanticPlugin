@@ -67,7 +67,7 @@ runs:
           const issueExists = issues.some(issue => issue.title === issueTitle);
 
           if (!issueExists) {
-            const logsUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}/jobs/${context.job}`;
+            const logsUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
             await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
